@@ -14,7 +14,7 @@ apply plugin: 'io.spring.dependency-management'
 
 bootJar {
     baseName = 'kairos'
-    version =  '0.1.0'
+    version =  '0.0.1'
 }
 
 repositories {
@@ -25,8 +25,24 @@ sourceCompatibility = 1.9
 targetCompatibility = 1.9
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('javax.inject:javax.inject:1')
+    compile('org.apache.commons:commons-lang3')
+    compile ('com.google.guava:guava:27.0-jre')
 
+
+    //Swagger - REST API documentatio
+    compile('io.springfox:springfox-swagger2:2.9.2')
+    compile('io.springfox:springfox-swagger-ui:2.9.2')
+    compile('io.springfox:springfox-bean-validators:2.9.2')
+
+
+    compileOnly 'org.projectlombok:lombok'
+
+    testCompile('org.springframework:spring-test')
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile('org.skyscreamer:jsonassert:1.5.0')
+    testCompile('org.springframework.security:spring-security-test')
+    testCompile('org.skyscreamer:jsonassert')
+    testCompile('com.jayway.jsonpath:json-path')
+    testCompile('com.jayway.jsonpath:json-path-assert')
 }
