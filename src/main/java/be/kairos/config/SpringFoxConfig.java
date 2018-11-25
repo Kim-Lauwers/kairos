@@ -44,5 +44,4 @@ public class SpringFoxConfig {
                 List.of()
         );
     }
-
 }
