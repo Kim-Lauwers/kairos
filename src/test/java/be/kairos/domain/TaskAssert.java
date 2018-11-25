@@ -27,4 +27,9 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
         assertThat(this.task.getNotes()).isNotNull().isEqualTo(notes);
         return this;
     }
+
+    public TaskAssert hasNoNotes() {
+        assertThat(this.task.getNotes()).isNull();
+        return this;
+    }
 }

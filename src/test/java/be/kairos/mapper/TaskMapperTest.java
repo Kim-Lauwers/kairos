@@ -21,4 +21,16 @@ public class TaskMapperTest {
                 .hasTitle(taskR.getTitle())
                 .hasNotes(taskR.getNotes());
     }
+
+    @Test
+    public void mapToDomainNullNotes() {
+        final TaskR taskR = defaultTaskR().withNotes(null).build();
+
+        final Task task = mapper.mapToDomain(taskR);
+
+        new TaskAssert(task)
+                .hasId(taskR.getId())
+                .hasTitle(taskR.getTitle())
+                .hasNoNotes();
+    }
 }
