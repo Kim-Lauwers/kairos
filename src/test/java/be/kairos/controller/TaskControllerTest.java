@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static be.kairos.controller.TaskController.APPLICATION_V1_JSON_VALUE;
+import static be.kairos.representation.TaskRTestBuilder.defaultTaskR;
 import static be.kairos.util.TestUtil.convertObjectToJsonBytes;
 import static be.kairos.util.TestUtil.convertObjectToJsonString;
 import static java.util.Arrays.asList;
@@ -40,10 +41,10 @@ public class TaskControllerTest {
 
     @Test
     public void taskGet() throws Exception {
-        final TaskR taskR = TaskR.builder().id(1L).title("Test Title").notes("Content test get").build();
-        taskGateway.create(taskR);
+        final TaskR taskR = defaultTaskR().build();
+        final TaskR createdTaskR = taskGateway.create(taskR);
 
-        final MvcResult mvcResult = mvc.perform(get("/api/task/15")
+        final MvcResult mvcResult = mvc.perform(get("/api/task/" + createdTaskR.getId())
                 .contentType(APPLICATION_V1_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_V1_JSON_VALUE))
@@ -51,15 +52,15 @@ public class TaskControllerTest {
 
         final String actual = mvcResult.getResponse().getContentAsString();
         assertEquals(
-                convertObjectToJsonString(taskR), actual, STRICT);
+                convertObjectToJsonString(createdTaskR), actual, STRICT);
     }
 
     @Test
     public void taskDelete() throws Exception {
-        final TaskR taskR = TaskR.builder().id(15L).title("Test Title").notes("Content test get").build();
+        final TaskR taskR = defaultTaskR().build();
         taskGateway.create(taskR);
 
-        mvc.perform(delete("/api/task/15")
+        mvc.perform(delete("/api/task/" + taskR.getId())
                 .contentType(APPLICATION_V1_JSON_VALUE))
                 .andExpect(status().isOk());
 
@@ -68,8 +69,8 @@ public class TaskControllerTest {
 
     @Test
     public void taskAll() throws Exception {
-        final TaskR taskR = TaskR.builder().id(15L).title("Test Title").notes("Content test get").build();
-        final TaskR taskR2 = TaskR.builder().id(16L).title("Test Title 2").notes("Content test get 2").build();
+        final TaskR taskR = defaultTaskR().build();
+        final TaskR taskR2 = defaultTaskR().build();
         taskGateway.create(taskR);
         taskGateway.create(taskR2);
 
@@ -86,7 +87,7 @@ public class TaskControllerTest {
 
     @Test
     public void taskCreate() throws Exception {
-        final TaskR taskR = TaskR.builder().id(14L).title("Test Title").notes("Content test").build();
+        final TaskR taskR = defaultTaskR().build();
 
         final MvcResult mvcResult = mvc.perform(
                 post("/api/task")

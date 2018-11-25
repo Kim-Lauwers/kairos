@@ -26,7 +26,7 @@ public class TaskRepository implements Reposistory<Task> {
 
     @Override
     public Task create(final Task task) {
-        db.put(db.size() + 1L, task);
+        db.put(task.getId(), task);
         return task;
     }
 
