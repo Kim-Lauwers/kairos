@@ -40,7 +40,7 @@ public class TaskControllerTest {
 
     @Test
     public void taskGet() throws Exception {
-        final TaskR taskR = TaskR.builder().id(15L).title("Test Title").notes("Content test get").build();
+        final TaskR taskR = TaskR.builder().id(1L).title("Test Title").notes("Content test get").build();
         taskGateway.create(taskR);
 
         final MvcResult mvcResult = mvc.perform(get("/api/task/15")
