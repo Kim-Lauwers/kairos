@@ -44,10 +44,6 @@ public class TaskController {
 
     @RequestMapping(value = "task", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public List<TaskR> all() {
-
-        taskGateway.create(TaskR.builder().title("tit").notes("not").build());
-
-
         return taskGateway.list();
     }
 
