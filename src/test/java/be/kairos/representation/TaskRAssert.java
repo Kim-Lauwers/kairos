@@ -13,7 +13,7 @@ public class TaskRAssert extends AbstractAssert<TaskRAssert, TaskR> {
         this.taskR = taskR;
     }
 
-    public TaskRAssert hasId(final Long id) {
+    public TaskRAssert hasId(final String id) {
         assertThat(this.taskR.getId()).isNotNull().isEqualTo(id);
         return this;
     }

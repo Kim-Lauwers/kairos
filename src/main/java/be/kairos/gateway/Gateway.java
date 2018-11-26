@@ -1,11 +1,13 @@
 package be.kairos.gateway;
 
+import be.kairos.domain.TaskId;
+
 import java.util.List;
 
 public interface Gateway<Representation> {
-    Representation get(Long id);
+    Representation get(TaskId id);
 
-    void delete(Long id);
+    void delete(TaskId id);
 
     Representation create(Representation representation);
 

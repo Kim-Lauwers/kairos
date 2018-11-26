@@ -13,10 +13,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static be.kairos.controller.TaskController.APPLICATION_V1_JSON_VALUE;
+import static be.kairos.domain.TaskId.taskId;
 import static be.kairos.representation.TaskRTestBuilder.defaultTaskR;
 import static be.kairos.util.TestUtil.convertObjectToJsonBytes;
 import static be.kairos.util.TestUtil.convertObjectToJsonString;
 import static java.util.Arrays.asList;
+import static java.util.UUID.fromString;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 import static org.skyscreamer.jsonassert.JSONCompareMode.LENIENT;
@@ -58,13 +60,13 @@ public class TaskControllerTest {
     @Test
     public void taskDelete() throws Exception {
         final TaskR taskR = defaultTaskR().build();
-        taskGateway.create(taskR);
+        final TaskR createdTask = taskGateway.create(taskR);
 
-        mvc.perform(delete("/api/task/" + taskR.getId())
+        mvc.perform(delete("/api/task/" + createdTask.getId())
                 .contentType(APPLICATION_V1_JSON_VALUE))
                 .andExpect(status().isOk());
 
-        assertThat(taskGateway.get(15L)).isNull();
+        assertThat(taskGateway.get(taskId(fromString(createdTask.getId())))).isNull();
     }
 
     @Test
@@ -81,6 +83,8 @@ public class TaskControllerTest {
                 .andReturn();
 
         final String actual = mvcResult.getResponse().getContentAsString();
+        taskR.setId(null);
+        taskR2.setId(null);
         assertEquals(
                 convertObjectToJsonString(asList(taskR, taskR2)), actual, LENIENT);
     }
@@ -100,7 +104,8 @@ public class TaskControllerTest {
                 .andReturn();
 
         final String actual = mvcResult.getResponse().getContentAsString();
+        taskR.setId(null);
         assertEquals(
-                convertObjectToJsonString(taskR), actual, STRICT);
+                convertObjectToJsonString(taskR), actual, LENIENT);
     }
 }

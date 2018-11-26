@@ -13,7 +13,7 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
         this.task = task;
     }
 
-    public TaskAssert hasId(final Long id) {
+    public TaskAssert hasId(final TaskId id) {
         assertThat(this.task.getId()).isNotNull().isEqualTo(id);
         return this;
     }

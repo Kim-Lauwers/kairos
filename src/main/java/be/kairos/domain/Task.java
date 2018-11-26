@@ -12,7 +12,7 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor(access = PRIVATE)
 @AllArgsConstructor(access = PRIVATE)
 public class Task {
-    private long id;
+    private TaskId id;
     private String title;
     private String notes;
 }

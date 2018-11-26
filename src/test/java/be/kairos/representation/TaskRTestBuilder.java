@@ -1,7 +1,6 @@
 package be.kairos.representation;
 
-import java.util.Random;
-
+import static be.kairos.domain.TaskIdForTests.randomTaskId;
 import static be.kairos.representation.TaskR.builder;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
@@ -18,12 +17,12 @@ public class TaskRTestBuilder {
 
     public static TaskRTestBuilder defaultTaskR() {
         return taskR()
-                .withId(new Random().nextLong())
+                .withId(randomTaskId().asString())
                 .withTitle(randomAlphabetic(30))
                 .withNotes(randomAlphabetic(80));
     }
 
-    public TaskRTestBuilder withId(final Long id) {
+    public TaskRTestBuilder withId(final String id) {
         builder.id(id);
         return this;
     }

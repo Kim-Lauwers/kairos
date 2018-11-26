@@ -3,6 +3,7 @@ package be.kairos.domain;
 import java.util.Random;
 
 import static be.kairos.domain.Task.builder;
+import static be.kairos.domain.TaskIdForTests.randomTaskId;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 public class TaskTestBuilder {
@@ -18,12 +19,12 @@ public class TaskTestBuilder {
 
     public static TaskTestBuilder defaultTask() {
         return task()
-                .withId(new Random().nextLong())
+                .withId(randomTaskId())
                 .withTitle(randomAlphabetic(30))
                 .withNotes(randomAlphabetic(80));
     }
 
-    public TaskTestBuilder withId(final Long id) {
+    public TaskTestBuilder withId(final TaskId id) {
         builder.id(id);
         return this;
     }

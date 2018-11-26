@@ -19,9 +19,20 @@ public class TaskMapperTest {
         final TaskR taskR = mapper.mapToRepresenation(task);
 
         new TaskRAssert(taskR)
-                .hasId(task.getId())
-                .hasTitle(task.getTitle())
-                .hasNotes(task.getNotes());
+                .hasId(taskR.getId())
+                .hasTitle(taskR.getTitle())
+                .hasNotes(taskR.getNotes());
+    }
+
+    @Test
+    public void mapToRepresentationNullId() {
+        final Task task = defaultTask().withId(null).build();
+
+        final TaskR taskR = mapper.mapToRepresenation(task);
+
+        new TaskRAssert(taskR)
+                .hasTitle(taskR.getTitle())
+                .hasNotes(taskR.getNotes());
     }
 
     @Test
@@ -33,8 +44,8 @@ public class TaskMapperTest {
         final TaskR taskR = mapper.mapToRepresenation(task);
 
         new TaskRAssert(taskR)
-                .hasId(task.getId())
-                .hasTitle(task.getTitle())
+                .hasId(taskR.getId())
+                .hasTitle(taskR.getTitle())
                 .hasNoNotes();
     }
 
@@ -45,9 +56,20 @@ public class TaskMapperTest {
         final Task task = mapper.mapToDomain(taskR);
 
         new TaskAssert(task)
-                .hasId(taskR.getId())
-                .hasTitle(taskR.getTitle())
-                .hasNotes(taskR.getNotes());
+                .hasId(task.getId())
+                .hasTitle(task.getTitle())
+                .hasNotes(task.getNotes());
+    }
+
+    @Test
+    public void mapToDomainNullId() {
+        final TaskR taskR = defaultTaskR().withId(null).build();
+
+        final Task task = mapper.mapToDomain(taskR);
+
+        new TaskAssert(task)
+                .hasTitle(task.getTitle())
+                .hasNotes(task.getNotes());
     }
 
     @Test
@@ -57,8 +79,8 @@ public class TaskMapperTest {
         final Task task = mapper.mapToDomain(taskR);
 
         new TaskAssert(task)
-                .hasId(taskR.getId())
-                .hasTitle(taskR.getTitle())
+                .hasId(task.getId())
+                .hasTitle(task.getTitle())
                 .hasNoNotes();
     }
 }

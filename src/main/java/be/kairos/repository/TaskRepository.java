@@ -1,6 +1,7 @@
 package be.kairos.repository;
 
 import be.kairos.domain.Task;
+import be.kairos.domain.TaskId;
 
 import javax.inject.Named;
 import java.util.ArrayList;
@@ -12,15 +13,15 @@ import java.util.Optional;
 @Named
 public class TaskRepository implements Reposistory<Task> {
 
-    private final Map<Long, Task> db = new HashMap<>();
+    private final Map<TaskId, Task> db = new HashMap<>();
 
     @Override
-    public Optional<Task> get(final Long id) {
+    public Optional<Task> get(final TaskId id) {
         return Optional.ofNullable(db.get(id));
     }
 
     @Override
-    public void delete(final Long id) {
+    public void delete(final TaskId id) {
         db.remove(id);
     }
 

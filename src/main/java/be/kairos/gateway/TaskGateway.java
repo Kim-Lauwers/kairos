@@ -1,6 +1,8 @@
 package be.kairos.gateway;
 
 import be.kairos.domain.Task;
+import be.kairos.domain.TaskId;
+import be.kairos.generator.EntityIdGenerator;
 import be.kairos.mapper.Mapper;
 import be.kairos.repository.Reposistory;
 import be.kairos.representation.TaskR;
@@ -16,25 +18,28 @@ public class TaskGateway implements Gateway<TaskR> {
 
     private final Mapper<Task, TaskR> taskMapper;
     private final Reposistory<Task> taskReposistory;
+    private final EntityIdGenerator entityIdGenerator;
 
-    public TaskGateway(final Mapper<Task, TaskR> taskMapper, final Reposistory<Task> taskReposistory) {
+    public TaskGateway(final Mapper<Task, TaskR> taskMapper, final Reposistory<Task> taskReposistory, final EntityIdGenerator entityIdGenerator) {
         this.taskMapper = taskMapper;
         this.taskReposistory = taskReposistory;
+        this.entityIdGenerator = entityIdGenerator;
     }
 
     @Override
-    public TaskR get(final Long id) {
+    public TaskR get(final TaskId id) {
         return taskReposistory.get(id).map(taskMapper::mapToRepresenation).orElse(null);
     }
 
     @Override
-    public void delete(final Long id) {
+    public void delete(final TaskId id) {
         taskReposistory.delete(id);
     }
 
     @Override
     public TaskR create(final TaskR taskR) {
         final Task task = taskMapper.mapToDomain(taskR);
+        task.setId(entityIdGenerator.generate(TaskId.class));
         final Task createdTask = taskReposistory.create(task);
         return taskMapper.mapToRepresenation(createdTask);
     }

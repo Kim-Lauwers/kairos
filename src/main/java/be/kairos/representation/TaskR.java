@@ -17,7 +17,7 @@ import static lombok.AccessLevel.PRIVATE;
 @ApiModel(description = "Class representing a task a person must finish.")
 public class TaskR {
     @ApiModelProperty(notes = "Id of the task, will be provided by the service", example = "13", accessMode = READ_ONLY)
-    private long id;
+    private String id;
 
     @ApiModelProperty(notes = "Title of the task.", example = "Support the cancer research", required = true)
     private String title;

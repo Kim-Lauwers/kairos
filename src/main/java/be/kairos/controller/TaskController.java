@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static be.kairos.domain.TaskId.taskId;
+import static java.util.UUID.fromString;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -31,17 +33,21 @@ public class TaskController {
     }
 
     @RequestMapping(value = "task/{taskId}", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
-    public TaskR get(@PathVariable("taskId") final Long taskId) {
-        return taskGateway.get(taskId);
+    public TaskR get(@PathVariable("taskId") final String taskId) {
+        return taskGateway.get(taskId(fromString(taskId)));
     }
 
     @RequestMapping(value = "task/{taskId}", method = DELETE, consumes = APPLICATION_V1_JSON_VALUE)
-    public void delete(@PathVariable("taskId") final Long taskId) {
-        taskGateway.delete(taskId);
+    public void delete(@PathVariable("taskId") final String taskId) {
+        taskGateway.delete(taskId(fromString(taskId)));
     }
 
     @RequestMapping(value = "task", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public List<TaskR> all() {
+
+        taskGateway.create(TaskR.builder().title("tit").notes("not").build());
+
+
         return taskGateway.list();
     }
 
