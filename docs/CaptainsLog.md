@@ -1,9 +1,8 @@
-Swagger
-https://www.vojtechruzicka.com/documenting-spring-boot-rest-api-swagger-springfox/
-https://github.com/vojtechruz/springfox-example/blob/master/src/main/resources/swagger.properties
-http://localhost:8080/swagger-ui.html#/task-controller/getUsingGET
-
 # Captain's Log
+
+## 26/11/2018 - How to document your api in REST
+See [ADR-Decision-Log](architecture/decisions/0003-swagger.md)
+
 ## 26/11/2018 - How to version your api in REST
 See [ADR-Decision-Log](architecture/decisions/0002-rest-versioning.md)
 

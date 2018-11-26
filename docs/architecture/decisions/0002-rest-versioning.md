@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-We want to have version our REST-apit.
+We want to have version our REST-api.
 
 ## Decision
 
