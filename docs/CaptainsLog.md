@@ -3,10 +3,10 @@ https://www.vojtechruzicka.com/documenting-spring-boot-rest-api-swagger-springfo
 https://github.com/vojtechruz/springfox-example/blob/master/src/main/resources/swagger.properties
 http://localhost:8080/swagger-ui.html#/task-controller/getUsingGET
 
-Rest API
-https://www.baeldung.com/rest-versioning
-
 # Captain's Log
+## 26/11/2018 - How to version your api in REST
+See [ADR-Decision-Log](architecture/decisions/0002-rest-versioning.md)
+
 ## 26/11/2018 - Introduction of ADR-Files
 Architecture decisions must also be documented in the ADR-Files, see [docs/architecture/decisions](architecture/decisions).
 
