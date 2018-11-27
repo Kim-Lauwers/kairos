@@ -4,6 +4,7 @@
 ### HTTP PATCH
 HTTP PATCH requests are to make partial update on a resource. 
 If you see PUT requests also modify a resource entity so to make more clear – PATCH method is the correct choice for partially updating an existing resource and PUT should only be used if you’re replacing a resource in its entirety.
+- See: https://restfulapi.net/http-methods/
 
 ## 26/11/2018 - How to document your api in REST
 See [ADR-Decision-Log](architecture/decisions/0003-swagger.md)
