@@ -35,16 +35,19 @@ public class TaskController {
     }
 
     @RequestMapping(value = "tasks/{taskId}", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    @ApiOperation(value = "Get the task with the specific id.", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public TaskR get(@PathVariable("taskId") final String taskId) {
         return taskGateway.get(taskId(fromString(taskId)));
     }
 
     @RequestMapping(value = "tasks/{taskId}", method = DELETE, consumes = APPLICATION_V1_JSON_VALUE)
+    @ApiOperation(value = "Delete the task.", consumes = APPLICATION_V1_JSON_VALUE)
     public void delete(@PathVariable("taskId") final String taskId) {
         taskGateway.delete(taskId(fromString(taskId)));
     }
 
     @RequestMapping(value = "tasks/{taskId}/complete", method = PATCH, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    @ApiOperation(value = "Complete the task.", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public TaskR complete(@PathVariable("taskId") final String taskId) {
         return taskGateway.complete(taskId(fromString(taskId)));
     }
@@ -55,13 +58,14 @@ public class TaskController {
     }
 
     @RequestMapping(value = "tasks/completed", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    @ApiOperation(value = "List all the completed tasks.", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public List<TaskR> allCompletedTasks() {
         return taskGateway.listCompletedTasks();
     }
 
     @PostMapping(value = "tasks", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     @ResponseStatus(CREATED)
-    @ApiOperation("Create a new task.")
+    @ApiOperation(value = "Create a new task.", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public TaskR create(
             @ApiParam("Task information for a new task to be created.")
             @RequestBody final TaskR taskR) {
