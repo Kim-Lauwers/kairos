@@ -64,6 +64,7 @@ public class TaskController {
     }
 
     @RequestMapping(value = "tasks/todo", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    @ApiOperation(value = "List all the todo tasks.", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public List<TaskR> allTodoTasks() {
         return taskGateway.listTodoTasks();
     }
