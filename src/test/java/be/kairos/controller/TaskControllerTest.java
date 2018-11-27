@@ -51,7 +51,7 @@ public class TaskControllerTest {
         new TaskRAssert(createdTaskR)
                 .isNotCompleted();
 
-        final MvcResult mvcResult = mvc.perform(patch("/api/task/" + createdTaskR.getId()+"/complete")
+        final MvcResult mvcResult = mvc.perform(patch("/api/tasks/" + createdTaskR.getId()+"/complete")
                 .contentType(APPLICATION_V1_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_V1_JSON_VALUE))
@@ -68,7 +68,7 @@ public class TaskControllerTest {
         final TaskR taskR = defaultTaskR().build();
         final TaskR createdTaskR = taskGateway.create(taskR);
 
-        final MvcResult mvcResult = mvc.perform(get("/api/task/" + createdTaskR.getId())
+        final MvcResult mvcResult = mvc.perform(get("/api/tasks/" + createdTaskR.getId())
                 .contentType(APPLICATION_V1_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_V1_JSON_VALUE))
@@ -84,7 +84,7 @@ public class TaskControllerTest {
         final TaskR taskR = defaultTaskR().build();
         final TaskR createdTask = taskGateway.create(taskR);
 
-        mvc.perform(delete("/api/task/" + createdTask.getId())
+        mvc.perform(delete("/api/tasks/" + createdTask.getId())
                 .contentType(APPLICATION_V1_JSON_VALUE))
                 .andExpect(status().isOk());
 
@@ -98,7 +98,7 @@ public class TaskControllerTest {
         taskGateway.create(taskR);
         taskGateway.create(taskR2);
 
-        final MvcResult mvcResult = mvc.perform(get("/api/task")
+        final MvcResult mvcResult = mvc.perform(get("/api/tasks")
                 .contentType(APPLICATION_V1_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_V1_JSON_VALUE))
@@ -116,7 +116,7 @@ public class TaskControllerTest {
         final TaskR taskR = defaultTaskR().build();
 
         final MvcResult mvcResult = mvc.perform(
-                post("/api/task")
+                post("/api/tasks")
                         .contentType(APPLICATION_V1_JSON_VALUE)
                         .content(convertObjectToJsonBytes(taskR))
                         .accept(APPLICATION_V1_JSON_VALUE)

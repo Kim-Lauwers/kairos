@@ -34,27 +34,27 @@ public class TaskController {
         this.taskGateway = taskGateway;
     }
 
-    @RequestMapping(value = "task/{taskId}", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    @RequestMapping(value = "tasks/{taskId}", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public TaskR get(@PathVariable("taskId") final String taskId) {
         return taskGateway.get(taskId(fromString(taskId)));
     }
 
-    @RequestMapping(value = "task/{taskId}", method = DELETE, consumes = APPLICATION_V1_JSON_VALUE)
+    @RequestMapping(value = "tasks/{taskId}", method = DELETE, consumes = APPLICATION_V1_JSON_VALUE)
     public void delete(@PathVariable("taskId") final String taskId) {
         taskGateway.delete(taskId(fromString(taskId)));
     }
 
-    @RequestMapping(value = "task/{taskId}/complete", method = PATCH, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    @RequestMapping(value = "tasks/{taskId}/complete", method = PATCH, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public TaskR complete(@PathVariable("taskId") final String taskId) {
         return taskGateway.complete(taskId(fromString(taskId)));
     }
 
-    @RequestMapping(value = "task", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    @RequestMapping(value = "tasks", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public List<TaskR> all() {
         return taskGateway.list();
     }
 
-    @PostMapping(value = "task", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    @PostMapping(value = "tasks", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     @ResponseStatus(CREATED)
     @ApiOperation("Create a new task.")
     public TaskR create(
