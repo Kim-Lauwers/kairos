@@ -35,43 +35,44 @@ public class TaskController {
     }
 
     @RequestMapping(value = "tasks/{taskId}", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
-    @ApiOperation(value = "Get the task with the specific id.", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    @ApiOperation(value = "Get the task with the specific id.", tags = {"task"}, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public TaskR get(@PathVariable("taskId") final String taskId) {
         return taskGateway.get(taskId(fromString(taskId)));
     }
 
     @RequestMapping(value = "tasks/{taskId}", method = DELETE, consumes = APPLICATION_V1_JSON_VALUE)
-    @ApiOperation(value = "Delete the task.", consumes = APPLICATION_V1_JSON_VALUE)
+    @ApiOperation(value = "Delete the task.", tags = {"task"}, consumes = APPLICATION_V1_JSON_VALUE)
     public void delete(@PathVariable("taskId") final String taskId) {
         taskGateway.delete(taskId(fromString(taskId)));
     }
 
     @RequestMapping(value = "tasks/{taskId}/complete", method = PATCH, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
-    @ApiOperation(value = "Complete the task.", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    @ApiOperation(value = "Complete the task.", tags = {"task"}, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public TaskR complete(@PathVariable("taskId") final String taskId) {
         return taskGateway.complete(taskId(fromString(taskId)));
     }
 
     @RequestMapping(value = "tasks", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    @ApiOperation(value = "List all the tasks.", tags = {"task"}, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public List<TaskR> all() {
         return taskGateway.list();
     }
 
     @RequestMapping(value = "tasks/completed", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
-    @ApiOperation(value = "List all the completed tasks.", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    @ApiOperation(value = "List all the completed tasks.", tags = {"task"}, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public List<TaskR> allCompletedTasks() {
         return taskGateway.listCompletedTasks();
     }
 
     @RequestMapping(value = "tasks/todo", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
-    @ApiOperation(value = "List all the todo tasks.", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    @ApiOperation(value = "List all the todo tasks.", tags = {"task"}, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public List<TaskR> allTodoTasks() {
         return taskGateway.listTodoTasks();
     }
 
     @PostMapping(value = "tasks", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     @ResponseStatus(CREATED)
-    @ApiOperation(value = "Create a new task.", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    @ApiOperation(value = "Create a new task.", tags = {"task"}, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     public TaskR create(
             @ApiParam("Task information for a new task to be created.")
             @RequestBody final TaskR taskR) {
