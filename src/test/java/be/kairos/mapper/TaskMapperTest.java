@@ -6,7 +6,9 @@ import be.kairos.representation.TaskR;
 import be.kairos.representation.TaskRAssert;
 import org.junit.Test;
 
+import static be.kairos.domain.TaskTestBuilder.defaultCompletedTask;
 import static be.kairos.domain.TaskTestBuilder.defaultTask;
+import static be.kairos.representation.TaskRTestBuilder.defaultCompletedTaskR;
 import static be.kairos.representation.TaskRTestBuilder.defaultTaskR;
 
 public class TaskMapperTest {
@@ -20,6 +22,20 @@ public class TaskMapperTest {
 
         new TaskRAssert(taskR)
                 .hasId(taskR.getId())
+                .isNotCompleted()
+                .hasTitle(taskR.getTitle())
+                .hasNotes(taskR.getNotes());
+    }
+
+    @Test
+    public void mapToRepresentationCompleted() {
+        final Task task = defaultCompletedTask().build();
+
+        final TaskR taskR = mapper.mapToRepresenation(task);
+
+        new TaskRAssert(taskR)
+                .hasId(taskR.getId())
+                .isCompleted()
                 .hasTitle(taskR.getTitle())
                 .hasNotes(taskR.getNotes());
     }
@@ -57,6 +73,20 @@ public class TaskMapperTest {
 
         new TaskAssert(task)
                 .hasId(task.getId())
+                .isNotCompleted()
+                .hasTitle(task.getTitle())
+                .hasNotes(task.getNotes());
+    }
+
+    @Test
+    public void mapToDomainCompleted() {
+        final TaskR taskR = defaultCompletedTaskR().build();
+
+        final Task task = mapper.mapToDomain(taskR);
+
+        new TaskAssert(task)
+                .hasId(task.getId())
+                .isCompleted()
                 .hasTitle(task.getTitle())
                 .hasNotes(task.getNotes());
     }

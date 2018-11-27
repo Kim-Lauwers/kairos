@@ -22,6 +22,10 @@ public class TaskRTestBuilder {
                 .withNotes(randomAlphabetic(80));
     }
 
+    public static TaskRTestBuilder defaultCompletedTaskR() {
+        return defaultTaskR().completed();
+    }
+
     public TaskRTestBuilder withId(final String id) {
         builder.id(id);
         return this;
@@ -34,6 +38,16 @@ public class TaskRTestBuilder {
 
     public TaskRTestBuilder withNotes(final String notes) {
         builder.notes(notes);
+        return this;
+    }
+
+    public TaskRTestBuilder completed() {
+        builder.completed(true);
+        return this;
+    }
+
+    public TaskRTestBuilder notCompleted() {
+        builder.completed(false);
         return this;
     }
 

@@ -24,4 +24,7 @@ public class TaskR {
 
     @ApiModelProperty(notes = "Description of the task.", example = "Pay 63 euro's on bankaccount BE45 0000 0000 8989")
     private String notes;
+
+    @ApiModelProperty(notes = "Indication if the task is completed. True when completed", example = "true")
+    private Boolean completed;
 }

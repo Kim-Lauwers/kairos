@@ -23,6 +23,16 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
         return this;
     }
 
+    public TaskAssert isCompleted() {
+        assertThat(this.task.getCompleted()).isNotNull().isTrue();
+        return this;
+    }
+
+    public TaskAssert isNotCompleted() {
+        assertThat(this.task.getCompleted()).isNotNull().isFalse();
+        return this;
+    }
+
     public TaskAssert hasNotes(final String notes) {
         assertThat(this.task.getNotes()).isNotNull().isEqualTo(notes);
         return this;

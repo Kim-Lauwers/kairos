@@ -15,4 +15,5 @@ public class Task {
     private TaskId id;
     private String title;
     private String notes;
+    private Boolean completed;
 }

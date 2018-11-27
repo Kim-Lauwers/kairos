@@ -3,6 +3,7 @@ package be.kairos.controller;
 import be.kairos.Application;
 import be.kairos.gateway.TaskGateway;
 import be.kairos.representation.TaskR;
+import be.kairos.representation.TaskRAssert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import static org.skyscreamer.jsonassert.JSONCompareMode.LENIENT;
 import static org.skyscreamer.jsonassert.JSONCompareMode.STRICT;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,6 +42,26 @@ public class TaskControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @Test
+    public void taskComplete() throws Exception {
+        final TaskR taskR = defaultTaskR().build();
+        final TaskR createdTaskR = taskGateway.create(taskR);
+
+        new TaskRAssert(createdTaskR)
+                .isNotCompleted();
+
+        final MvcResult mvcResult = mvc.perform(patch("/api/task/" + createdTaskR.getId()+"/complete")
+                .contentType(APPLICATION_V1_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(APPLICATION_V1_JSON_VALUE))
+                .andReturn();
+
+        final String actual = mvcResult.getResponse().getContentAsString();
+        createdTaskR.setCompleted(true);
+        assertEquals(
+                convertObjectToJsonString(createdTaskR), actual, STRICT);
+    }
 
     @Test
     public void taskGet() throws Exception {

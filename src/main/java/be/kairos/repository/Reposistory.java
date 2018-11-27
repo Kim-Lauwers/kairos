@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface Reposistory<T> {
     Optional<T> get(final TaskId id);
     void delete(final TaskId id);
-    T create(final T aggregate);
+    T saveOrUpdate(final T aggregate);
     List<T> list();
 }

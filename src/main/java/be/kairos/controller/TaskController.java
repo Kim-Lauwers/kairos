@@ -1,5 +1,6 @@
 package be.kairos.controller;
 
+import be.kairos.domain.TaskId;
 import be.kairos.gateway.Gateway;
 import be.kairos.representation.TaskR;
 import io.swagger.annotations.Api;
@@ -19,6 +20,7 @@ import static java.util.UUID.fromString;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.PATCH;
 
 @RestController
 @RequestMapping("api")
@@ -26,9 +28,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class TaskController {
     static final String APPLICATION_V1_JSON_VALUE = "application/be.kairos.api-v1+json";
 
-    private Gateway<TaskR> taskGateway;
+    private Gateway<TaskId, TaskR> taskGateway;
 
-    public TaskController(final Gateway<TaskR> taskGateway) {
+    public TaskController(final Gateway<TaskId, TaskR> taskGateway) {
         this.taskGateway = taskGateway;
     }
 
@@ -40,6 +42,11 @@ public class TaskController {
     @RequestMapping(value = "task/{taskId}", method = DELETE, consumes = APPLICATION_V1_JSON_VALUE)
     public void delete(@PathVariable("taskId") final String taskId) {
         taskGateway.delete(taskId(fromString(taskId)));
+    }
+
+    @RequestMapping(value = "task/{taskId}/complete", method = PATCH, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    public TaskR complete(@PathVariable("taskId") final String taskId) {
+        return taskGateway.complete(taskId(fromString(taskId)));
     }
 
     @RequestMapping(value = "task", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)

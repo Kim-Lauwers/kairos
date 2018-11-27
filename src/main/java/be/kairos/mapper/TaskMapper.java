@@ -16,6 +16,7 @@ public class TaskMapper implements Mapper<Task, TaskR> {
                 .id(taskId(taskR.getId() == null ? null : UUID.fromString(taskR.getId())))
                 .title(taskR.getTitle())
                 .notes(taskR.getNotes())
+                .completed(taskR.getCompleted() == null ? false : taskR.getCompleted())
                 .build();
     }
 
@@ -25,6 +26,7 @@ public class TaskMapper implements Mapper<Task, TaskR> {
                 .id(task.getId() == null ? null : task.getId().asString())
                 .title(task.getTitle())
                 .notes(task.getNotes())
+                .completed(task.getCompleted() == null ? false : task.getCompleted())
                 .build();
     }
 }
