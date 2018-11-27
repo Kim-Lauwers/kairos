@@ -16,4 +16,6 @@ public interface Gateway<Id, Representation> {
     List<Representation> list();
 
     List<Representation> listCompletedTasks();
+
+    List<Representation> listTodoTasks();
 }

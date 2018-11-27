@@ -63,6 +63,11 @@ public class TaskController {
         return taskGateway.listCompletedTasks();
     }
 
+    @RequestMapping(value = "tasks/todo", method = GET, consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
+    public List<TaskR> allTodoTasks() {
+        return taskGateway.listTodoTasks();
+    }
+
     @PostMapping(value = "tasks", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)
     @ResponseStatus(CREATED)
     @ApiOperation(value = "Create a new task.", consumes = APPLICATION_V1_JSON_VALUE, produces = APPLICATION_V1_JSON_VALUE)

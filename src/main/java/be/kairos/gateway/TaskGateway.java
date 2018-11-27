@@ -67,4 +67,9 @@ public class TaskGateway implements Gateway<TaskId, TaskR> {
     public List<TaskR> listCompletedTasks() {
         return taskReposistory.listCompleted().stream().map(taskMapper::mapToRepresenation).collect(toList());
     }
+
+    @Override
+    public List<TaskR> listTodoTasks() {
+        return taskReposistory.listTodo().stream().map(taskMapper::mapToRepresenation).collect(toList());
+    }
 }

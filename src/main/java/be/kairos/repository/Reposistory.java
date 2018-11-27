@@ -15,4 +15,6 @@ public interface Reposistory<T> {
     List<T> list();
 
     List<T> listCompleted();
+
+    List<T> listTodo();
 }

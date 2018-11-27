@@ -4,6 +4,8 @@ import be.kairos.Application;
 import be.kairos.gateway.TaskGateway;
 import be.kairos.representation.TaskR;
 import be.kairos.representation.TaskRAssert;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,14 @@ public class TaskControllerTest {
     @Autowired
     private MockMvc mvc;
 
+    @Before
+    @After
+    public void cleanTaskGatewayBecauseLocalMemory() {
+        taskGateway
+                .list()
+                .forEach(taskR -> taskGateway.delete(taskId(fromString(taskR.getId()))));
+    }
+
     @Test
     public void taskComplete() throws Exception {
         final TaskR taskR = defaultTaskR().build();
@@ -52,7 +62,7 @@ public class TaskControllerTest {
         new TaskRAssert(createdTaskR)
                 .isNotCompleted();
 
-        final MvcResult mvcResult = mvc.perform(patch("/api/tasks/" + createdTaskR.getId()+"/complete")
+        final MvcResult mvcResult = mvc.perform(patch("/api/tasks/" + createdTaskR.getId() + "/complete")
                 .contentType(APPLICATION_V1_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_V1_JSON_VALUE))
@@ -93,7 +103,7 @@ public class TaskControllerTest {
     }
 
     @Test
-    public void taskAll() throws Exception {
+    public void listAllTasks() throws Exception {
         final TaskR taskR = defaultTaskR().build();
         final TaskR taskR2 = defaultTaskR().build();
         taskGateway.create(taskR);
@@ -113,7 +123,7 @@ public class TaskControllerTest {
     }
 
     @Test
-    public void taskAllCompletedTasks() throws Exception {
+    public void listAllCompletedTasks() throws Exception {
         final TaskR taskR = defaultCompletedTaskR().build();
         final TaskR taskR2 = defaultCompletedTaskR().build();
         final TaskR taskR3 = defaultTaskR().build();
@@ -122,6 +132,28 @@ public class TaskControllerTest {
         taskGateway.create(taskR3);
 
         final MvcResult mvcResult = mvc.perform(get("/api/tasks/completed")
+                .contentType(APPLICATION_V1_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(APPLICATION_V1_JSON_VALUE))
+                .andReturn();
+
+        final String actual = mvcResult.getResponse().getContentAsString();
+        taskR.setId(null);
+        taskR2.setId(null);
+        assertEquals(
+                convertObjectToJsonString(asList(taskR, taskR2)), actual, LENIENT);
+    }
+
+    @Test
+    public void listAllTodoTasks() throws Exception {
+        final TaskR taskR = defaultTaskR().build();
+        final TaskR taskR2 = defaultTaskR().build();
+        final TaskR taskR3 = defaultCompletedTaskR().build();
+        taskGateway.create(taskR);
+        taskGateway.create(taskR2);
+        taskGateway.create(taskR3);
+
+        final MvcResult mvcResult = mvc.perform(get("/api/tasks/todo")
                 .contentType(APPLICATION_V1_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_V1_JSON_VALUE))

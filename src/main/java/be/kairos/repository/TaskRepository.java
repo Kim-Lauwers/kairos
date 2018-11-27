@@ -42,4 +42,9 @@ public class TaskRepository implements Reposistory<Task> {
     public List<Task> listCompleted() {
         return db.values().stream().filter(task -> task.getCompleted()).collect(toList());
     }
+
+    @Override
+    public List<Task> listTodo() {
+        return db.values().stream().filter(task -> !task.getCompleted()).collect(toList());
+    }
 }
