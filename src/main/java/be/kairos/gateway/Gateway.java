@@ -11,7 +11,9 @@ public interface Gateway<Id, Representation> {
 
     Representation create(final Representation representation);
 
+    Representation complete(final Id taskId);
+
     List<Representation> list();
 
-    Representation complete(final Id taskId);
+    List<Representation> listCompletedTasks();
 }

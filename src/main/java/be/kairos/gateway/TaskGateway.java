@@ -46,11 +46,6 @@ public class TaskGateway implements Gateway<TaskId, TaskR> {
     }
 
     @Override
-    public List<TaskR> list() {
-        return taskReposistory.list().stream().map(taskMapper::mapToRepresenation).collect(toList());
-    }
-
-    @Override
     public TaskR complete(final TaskId taskId) {
         final Optional<Task> task = taskReposistory.get(taskId);
 
@@ -61,5 +56,15 @@ public class TaskGateway implements Gateway<TaskId, TaskR> {
             return taskMapper.mapToRepresenation(saveOrUpdate);
         }
         throw new RuntimeException();
+    }
+
+    @Override
+    public List<TaskR> list() {
+        return taskReposistory.list().stream().map(taskMapper::mapToRepresenation).collect(toList());
+    }
+
+    @Override
+    public List<TaskR> listCompletedTasks() {
+        return taskReposistory.listCompleted().stream().map(taskMapper::mapToRepresenation).collect(toList());
     }
 }

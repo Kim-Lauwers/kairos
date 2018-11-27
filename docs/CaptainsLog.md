@@ -1,5 +1,8 @@
 # Captain's Log
 
+Uses aliases for common queries.
+- See: https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries
+
 ## 27/11/2018 - Using PATCH
 ### HTTP PATCH
 HTTP PATCH requests are to make partial update on a resource. 

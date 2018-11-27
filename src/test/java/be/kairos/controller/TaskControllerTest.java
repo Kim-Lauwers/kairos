@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import static be.kairos.controller.TaskController.APPLICATION_V1_JSON_VALUE;
 import static be.kairos.domain.TaskId.taskId;
+import static be.kairos.representation.TaskRTestBuilder.defaultCompletedTaskR;
 import static be.kairos.representation.TaskRTestBuilder.defaultTaskR;
 import static be.kairos.util.TestUtil.convertObjectToJsonBytes;
 import static be.kairos.util.TestUtil.convertObjectToJsonString;
@@ -99,6 +100,28 @@ public class TaskControllerTest {
         taskGateway.create(taskR2);
 
         final MvcResult mvcResult = mvc.perform(get("/api/tasks")
+                .contentType(APPLICATION_V1_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(APPLICATION_V1_JSON_VALUE))
+                .andReturn();
+
+        final String actual = mvcResult.getResponse().getContentAsString();
+        taskR.setId(null);
+        taskR2.setId(null);
+        assertEquals(
+                convertObjectToJsonString(asList(taskR, taskR2)), actual, LENIENT);
+    }
+
+    @Test
+    public void taskAllCompletedTasks() throws Exception {
+        final TaskR taskR = defaultCompletedTaskR().build();
+        final TaskR taskR2 = defaultCompletedTaskR().build();
+        final TaskR taskR3 = defaultTaskR().build();
+        taskGateway.create(taskR);
+        taskGateway.create(taskR2);
+        taskGateway.create(taskR3);
+
+        final MvcResult mvcResult = mvc.perform(get("/api/tasks/completed")
                 .contentType(APPLICATION_V1_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_V1_JSON_VALUE))

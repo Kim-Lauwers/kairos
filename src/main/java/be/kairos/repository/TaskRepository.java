@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static java.util.stream.Collectors.toList;
+
 @Named
 public class TaskRepository implements Reposistory<Task> {
 
@@ -34,5 +36,10 @@ public class TaskRepository implements Reposistory<Task> {
     @Override
     public List<Task> list() {
         return new ArrayList<>(db.values());
+    }
+
+    @Override
+    public List<Task> listCompleted() {
+        return db.values().stream().filter(task -> task.getCompleted()).collect(toList());
     }
 }

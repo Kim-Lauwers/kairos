@@ -7,7 +7,12 @@ import java.util.Optional;
 
 public interface Reposistory<T> {
     Optional<T> get(final TaskId id);
+
     void delete(final TaskId id);
+
     T saveOrUpdate(final T aggregate);
+
     List<T> list();
+
+    List<T> listCompleted();
 }
